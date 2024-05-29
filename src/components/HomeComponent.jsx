@@ -1,13 +1,17 @@
-import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import React from "react";
+import { useNavigate } from "react-router-dom";
 
-export default class HomeComponent extends Component {
-  render() {
-    return (
-      <div className="Home">
-        <h1>Quiz App</h1>
-        <Link to="/quiz">Play</Link>
-      </div>
-    );
-  }
+export default function HomeComponent() {
+  const navigate = useNavigate();
+
+  const startQuiz = () => {
+    navigate("/quiz");
+  };
+
+  return (
+    <div className="Home">
+      <h1>Quiz App</h1>
+      <button onClick={startQuiz}>Play</button>
+    </div>
+  );
 }

@@ -19,7 +19,7 @@ body {
   color: white;
 }
 
-.Home a {
+.Home button {
   width: 200px;
   margin: 50px;
   padding: 10px;
@@ -52,6 +52,10 @@ body {
 }
 
 .choice-btn:hover {
+  background-color: #0d6093;
+}
+
+.choice-btn:selectedOption {
   background-color: #05304b;
 }
 

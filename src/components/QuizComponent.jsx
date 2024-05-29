@@ -1,99 +1,121 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import questionsData from "../../resources/quizQuestion.json";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-export default class QuizComponent extends Component {
-  state = {
-    questions: questionsData,
-    currentQuestionIndex: 0,
+export default function QuizComponent() {
+  const navigate = useNavigate();
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [userAnswers, setUserAnswers] = useState({});
+  const [selectedOption, setSelectedOption] = useState("");
+
+  const handleOptionClick = (option) => {
+    setSelectedOption(option);
+    setUserAnswers((prevAnswers) => ({
+      ...prevAnswers,
+      [currentQuestionIndex]: option,
+    }));
   };
 
-  handlePrevious = () => {
-    const { currentQuestionIndex } = this.state;
-    const { questions } = this.state;
-    const newIndex = currentQuestionIndex > 0 ? currentQuestionIndex - 1 : 0;
-    this.setState({ currentQuestionIndex: newIndex });
+  const handleNext = () => {
+    if (currentQuestionIndex < questionsData.length - 1) {
+      setCurrentQuestionIndex(currentQuestionIndex + 1);
+      setSelectedOption("");
+    }
   };
 
-  handleNext = () => {
-    const { currentQuestionIndex } = this.state;
-    const { questions } = this.state;
-    const newIndex =
-      currentQuestionIndex < questions.length - 1
-        ? currentQuestionIndex + 1
-        : questions.length - 1;
-    this.setState({ currentQuestionIndex: newIndex });
+  const handlePrevious = () => {
+    if (currentQuestionIndex > 0) {
+      setCurrentQuestionIndex(currentQuestionIndex - 1);
+      setSelectedOption(userAnswers[currentQuestionIndex - 1] || "");
+    }
   };
 
-  handleQuit = () => {
-    const confirmQuit = window.confirm("Are you sure you want to quit ?");
+  const handleQuit = () => {
+    const confirmQuit = window.confirm("Are you sure you want to quit?");
+    if (confirmQuit) {
+      navigate("/");
+    }
   };
 
-  render() {
-    const { questions, currentQuestionIndex } = this.state;
-    const currentQuestion = questions[currentQuestionIndex];
-    return (
-      <>
-        <div className="QuizPage">
-          <h1>Question</h1>
-          <div className="question-container">
-            <div className="question-count">
-              <span>{currentQuestionIndex + 1} of 15</span>
-            </div>
-            <h4>{currentQuestion.question}</h4>
-            <ul className="choice">
-              <li className="choice-btn">
-                <input
-                  type="radio"
-                  id="optionA"
-                  name="answer"
-                  value="optionA"
-                />
-                <label htmlFor="optionA">{currentQuestion.optionA}</label>
-              </li>
-              <li className="choice-btn">
-                <input
-                  type="radio"
-                  id="optionB"
-                  name="answer"
-                  value="optionB"
-                />
-                <label htmlFor="optionB">{currentQuestion.optionB}</label>
-              </li>
-              <li className="choice-btn">
-                <input
-                  type="radio"
-                  id="optionC"
-                  name="answer"
-                  value="optionC"
-                />
-                <label htmlFor="optionC">{currentQuestion.optionC}</label>
-              </li>
-              <li className="choice-btn">
-                <input
-                  type="radio"
-                  id="optionD"
-                  name="answer"
-                  value="optionD"
-                />
-                <label htmlFor="optionD">{currentQuestion.optionD}</label>
-              </li>
-            </ul>
+  const handleFinish = () => {
+    navigate("/result", { state: { userAnswers } });
+  };
 
-            <div className="navigation">
-              <button id="prev" onClick={this.handlePrevious}>
-                Previous
-              </button>
-              <button id="next" onClick={this.handleNext}>
-                Next
-              </button>
-              <button id="quit" onClick={this.handleQuit}>
-                Quit
-              </button>
-            </div>
+  const currentQuestion = questionsData[currentQuestionIndex];
+
+  return (
+    <>
+      <div className="QuizPage">
+        <h1>Question</h1>
+        <div className="question-container">
+          <div className="question-count">
+            <span>
+              {currentQuestionIndex + 1} of {questionsData.length}
+            </span>
+          </div>
+          <h4>{currentQuestion.question}</h4>
+          <ul className="choice">
+            <li
+              className={`choice-btn ${
+                selectedOption === "optionA" ? "selected" : ""
+              }`}
+              onClick={() => handleOptionClick("optionA")}
+              style={{
+                backgroundColor: selectedOption === "optionA" ? "green" : "",
+              }}
+            >
+              {currentQuestion.optionA}
+            </li>
+            <li
+              className={`choice-btn ${
+                selectedOption === "optionB" ? "selected" : ""
+              }`}
+              onClick={() => handleOptionClick("optionB")}
+              style={{
+                backgroundColor: selectedOption === "optionB" ? "green" : "",
+              }}
+            >
+              {currentQuestion.optionB}
+            </li>
+            <li
+              className={`choice-btn ${
+                selectedOption === "optionC" ? "selected" : ""
+              }`}
+              onClick={() => handleOptionClick("optionC")}
+              style={{
+                backgroundColor: selectedOption === "optionC" ? "green" : "",
+              }}
+            >
+              {currentQuestion.optionC}
+            </li>
+            <li
+              className={`choice-btn ${
+                selectedOption === "optionD" ? "selected" : ""
+              }`}
+              onClick={() => handleOptionClick("optionD")}
+              style={{
+                backgroundColor: selectedOption === "optionD" ? "green" : "",
+              }}
+            >
+              {currentQuestion.optionD}
+            </li>
+          </ul>
+          <div className="navigation">
+            <button id="prev" onClick={handlePrevious}>
+              Previous
+            </button>
+            <button id="next" onClick={handleNext}>
+              Next
+            </button>
+            <button id="finish" onClick={handleFinish}>
+              Finish
+            </button>
+            <button id="quit" onClick={handleQuit}>
+              Quit
+            </button>
           </div>
         </div>
-      </>
-    );
-  }
+      </div>
+    </>
+  );
 }
