@@ -1,0 +1,136 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #47398d;
+  padding: 100px;
+}
+
+.Home {
+  display: flex;
+  text-align: center;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 100px;
+  color: white;
+}
+
+.Home a {
+  width: 200px;
+  margin: 50px;
+  padding: 10px;
+  background-color: #0ab306;
+  text-decoration: none;
+  color: white;
+  border-radius: 20px;
+}
+
+.QuizPage {
+  background-color: white;
+  padding: 30px;
+  text-align: center;
+}
+
+.choice {
+  padding: 20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.choice-btn {
+  padding: 10px 20px;
+  display: inline-block;
+  position: relative;
+  color: white;
+  background-color: #1ea1f1;
+  border: 1px solid white;
+  border-radius: 20px;
+}
+
+.choice-btn:hover {
+  background-color: #05304b;
+}
+
+.choice-btn input[type="radio"] {
+  margin: 5px;
+}
+
+.navigation {
+  padding: 20px;
+  color: white;
+}
+
+#prev {
+  background-color: #3e7eaa;
+}
+
+#next {
+  background-color: #008001;
+}
+
+#quit {
+  background-color: #ff0000;
+}
+
+.heading {
+  text-align: center;
+  color: aquamarine;
+  padding: 10px;
+}
+.resultBoard {
+  background-color: white;
+  padding: 20px;
+  text-align: center;
+}
+
+.resultBoard h1,
+h4,
+p {
+  padding: 10px;
+}
+
+.resultBoard h1 {
+  color: blue;
+}
+
+p {
+  text-align: left;
+}
+.summary {
+  display: flex;
+  justify-content: space-between;
+}
+
+.navigation-result {
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+}
+
+button {
+  padding: 10px;
+  margin: 5px;
+}
+
+.playAgain {
+  color: navy;
+  border: 3px solid navy;
+}
+
+.homeBtn {
+  color: green;
+  border: 3px solid green;
+}
+
+button:hover {
+  background-color: black;
+}
+
+
+a:hover {
+  background-color: black;
+}
