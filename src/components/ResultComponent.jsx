@@ -14,7 +14,10 @@ export default function ResultComponent() {
 
     questionsData.forEach((question, index) => {
       const userAnswer = userAnswers[index];
-      if (userAnswer === question.answer) {
+      const correctAnswer = Object.keys(question).find(
+        (key) => question[key] === question.answer
+      );
+      if (userAnswer === correctAnswer) {
         score += 1;
         correctAnswers += 1;
       } else if (userAnswer) {
